@@ -42,42 +42,10 @@ public class CameraScan : MonoBehaviour
 		if (!isAutoFocus)
 		{
 			CameraDevice.Instance.SetFocusMode(CameraDevice.FocusMode.FOCUS_MODE_NORMAL);
-		}
+        }
 		Debug.Log(String.Format("AutoFocus : {0}", isAutoFocus));
 		cameraInitialized = true;
 	}
-
-	/*private void Update()
-	{
-		if (cameraInitialized)
-		{
-			try
-			{
-				var cameraFeed = CameraDevice.Instance.GetCameraImage(Vuforia.Image.PIXEL_FORMAT.RGB888);
-				//var cameraFeed = CameraDevice.Instance.GetCameraImage(Vuforia.Image.PIXEL_FORMAT.GRAYSCALE);
-				if (cameraFeed == null)
-				{
-					return;
-				}
-				var data = barCodeReader.Decode(cameraFeed.Pixels, cameraFeed.BufferWidth, cameraFeed.BufferHeight, RGBLuminanceSource.BitmapFormat.RGB24);
-				if (data != null)
-				{
-					// QRCode detected.
-					Debug.Log(data.Text);
-					DebugText(data.Text);
-				}
-				else
-				{
-					Debug.Log("No QR code detected !");
-					DebugText("No QR Code Detected !");
-				}
-			}
-			catch (Exception e)
-			{
-				Debug.LogError(e.Message);
-			}
-		}
-	}*/
 
 	void DebugText (string msg) {
 		debugText.text = msg;
@@ -87,6 +55,7 @@ public class CameraScan : MonoBehaviour
     {
         if (cameraInitialized)
         {
+            CameraDevice.Instance.SetFocusMode(CameraDevice.FocusMode.FOCUS_MODE_TRIGGERAUTO);
             try
             {
                 var cameraFeed = CameraDevice.Instance.GetCameraImage(Vuforia.Image.PIXEL_FORMAT.RGB888);
@@ -120,7 +89,7 @@ public class CameraScan : MonoBehaviour
         Application.Quit();
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKey("escape"))
             Application.Quit();
